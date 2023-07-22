@@ -1,0 +1,52 @@
+<html>
+<SCRIPT>
+    var pos = 0;
+    const pacArray = [
+        ['PacMan1.png', 'PacMan2.png'],
+        ['PacMan3.png', 'PacMan4.png']
+    ];
+    var direction = 0;
+    var focus = 0;
+
+    function Run() {
+        let img = document.getElementById("PacMan");
+        let imgWidth = img.width
+        focus = (focus + 1) % 2;
+        direction = checkPageBounds(direction, imgWidth);
+        img.src = pacArray[direction][focus];
+        if (direction) {
+            pos -= 20;
+            img.style.left = pos + "px";
+        } else {
+            pos += 20;
+            img.style.left = pos + 'px';
+        }
+        // Use setTimeout to call Run every 200 millesecs
+        setTimeout (Run, 200);
+    }
+
+    function checkPageBounds(direction, imgWidth) {
+        // Get the current position of the Pac-Man
+        let currentPosition = pos;
+
+        // Get the width of the window
+        let windowWidth = window.innerWidth;
+
+        // Check if the Pac-Man is going right and reaches the right edge
+        if (direction === 0 && currentPosition + imgWidth >= windowWidth) {
+            direction = 1; // Change the direction to go left
+        }
+        // Check if the Pac-Man is going left and reaches the left edge
+        else if (direction === 1 && currentPosition <= 0) {
+            direction = 0; // Change the direction to go right
+        }
+
+        return direction;
+    }
+</SCRIPT>
+
+<body>
+    <img id="PacMan" src="PacMan1.png" width='200' onclick="Run()" style="position:absolute"> </img>
+</body>
+
+</html>
